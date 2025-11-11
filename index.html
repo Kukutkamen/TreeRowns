@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кристаллы Казино - Игра 3 в ряд</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="leaderboard">
+            <h2>🏆 ТОП ИГРОКОВ</h2>
+            <div id="leaderboard-list" class="leaderboard-list"></div>
+        </div>
+
+        <div class="score-board">
+            <div class="score-item">Счет: <span id="score">0</span></div>
+            <div class="score-item">Ходы: <span id="moves">15</span></div>
+            <div class="score-item">Лучший: <span id="best-score">0</span></div>
+        </div>
+
+        <div class="game-board" id="game-board"></div>
+
+        <div class="controls">
+            <button id="restart-btn" class="btn btn-danger">🔄 Новая игра</button>
+            <button id="save-btn" class="btn">💾 Сохранить</button>
+            <button id="settings-btn" class="btn">⚙️ Настройки</button>
+        </div>
+    </div>
+
+    <div class="game-over" id="game-over">
+        <div class="game-over-content">
+            <h2>Игра окончена! 🎉</h2>
+            <p>Ваш счет: <span id="final-score">0</span></p>
+            <button id="play-again-btn" class="btn">🎮 Играть снова</button>
+        </div>
+    </div>
+
+    <div class="settings-modal" id="settings-modal">
+        <div class="settings-content">
+            <h2>⚙️ Настройки игры</h2>
+            
+            <div class="setting-group">
+                <label>Тема оформления:</label>
+                <select id="theme-select">
+                    <option value="default">Космическая</option>
+                    <option value="forest">Лесная</option>
+                    <option value="ocean">Океан</option>
+                    <option value="candy">Конфетная</option>
+                </select>
+            </div>
+
+            <div class="setting-group">
+                <label>Тип кристаллов:</label>
+                <select id="crystal-style">
+                    <option value="emoji">Эмодзи</option>
+                    <option value="images">Изображения</option>
+                    <option value="shapes">Фигуры</option>
+                </select>
+            </div>
+
+            <div class="setting-group">
+                <label>Звуки:</label>
+                <input type="checkbox" id="sound-toggle" checked>
+            </div>
+
+            <div class="setting-group">
+                <label>Сложность:</label>
+                <select id="difficulty">
+                    <option value="easy">Легкая (20 ходов)</option>
+                    <option value="normal" selected>Нормальная (15 ходов)</option>
+                    <option value="hard">Сложная (10 ходов)</option>
+                </select>
+            </div>
+
+            <button id="save-settings" class="btn">💾 Сохранить настройки</button>
+            <button id="close-settings" class="btn btn-danger">✖ Закрыть</button>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
