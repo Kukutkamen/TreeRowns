@@ -41,6 +41,15 @@ body {
     align-items: center;
     overflow: hidden;
     touch-action: none;
+    transition: all 0.5s ease;
+}
+
+body.custom-background {
+    background-image: url('assets/background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 .container {
@@ -85,6 +94,11 @@ body {
     border: 1px solid var(--secondary-color);
 }
 
+.leaderboard-item:hover {
+    background: rgba(255,255,255,0.2);
+    transform: translateX(5px);
+}
+
 .leaderboard-item.current-user {
     background: rgba(255,215,0,0.2);
     border: 1px solid gold;
@@ -100,6 +114,33 @@ body {
     border: 1px solid var(--secondary-color);
 }
 
+.leaderboard-info {
+    flex: 1;
+    text-align: left;
+}
+
+.leaderboard-name {
+    font-weight: bold;
+    font-size: 11px;
+    color: #ffffff;
+}
+
+.leaderboard-score {
+    font-size: 12px;
+    color: gold;
+    font-weight: bold;
+    text-shadow: 0 0 5px gold;
+}
+
+.leaderboard-position {
+    width: 20px;
+    text-align: center;
+    font-weight: bold;
+    margin-right: 6px;
+    font-size: 11px;
+    color: var(--primary-color);
+}
+
 .score-board {
     display: flex;
     justify-content: space-around;
@@ -111,6 +152,13 @@ body {
     animation: fadeInUp 0.8s ease 0.2s both;
     border: 2px solid var(--secondary-color);
     box-shadow: 0 0 20px var(--secondary-color);
+}
+
+.score-item {
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: 0 0 5px #ffffff;
 }
 
 .game-board {
@@ -147,12 +195,121 @@ body {
 }
 
 .cell img {
-    width: 80%;
-    height: 80%;
+    width: 28px;
+    height: 28px;
     object-fit: contain;
+    pointer-events: none;
 }
 
-/* Добавьте остальные стили из вашего примера... */
+.cell:hover {
+    transform: scale(1.1);
+}
+
+.cell.selected {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px gold, 0 0 30px rgba(255,215,0,0.5);
+    animation: pulse 1s infinite;
+    z-index: 10;
+}
+
+.cell.matched {
+    animation: disappear 0.4s ease forwards;
+}
+
+.cell.falling {
+    animation: fallDown 0.4s ease forwards;
+}
+
+.cell.new {
+    animation: popIn 0.4s ease;
+}
+
+/* Стили кристаллов для эмодзи */
+.cell[data-type="1"] {
+    background: radial-gradient(circle at 30% 30%, #ff00ff, #9900cc);
+    box-shadow: 0 0 15px #ff00ff, inset 0 0 10px rgba(255,255,255,0.3);
+    border: 1px solid #cc00ff;
+}
+.cell[data-type="2"] {
+    background: radial-gradient(circle at 30% 30%, #00ffff, #0099cc);
+    box-shadow: 0 0 15px #00ffff, inset 0 0 10px rgba(255,255,255,0.3);
+    border: 1px solid #00ccff;
+}
+.cell[data-type="3"] {
+    background: radial-gradient(circle at 30% 30%, #ffff00, #cc9900);
+    box-shadow: 0 0 15px #ffff00, inset 0 0 10px rgba(255,255,255,0.3);
+    border: 1px solid #ffcc00;
+}
+.cell[data-type="4"] {
+    background: radial-gradient(circle at 30% 30%, #00ff00, #009900);
+    box-shadow: 0 0 15px #00ff00, inset 0 0 10px rgba(255,255,255,0.3);
+    border: 1px solid #00cc00;
+}
+.cell[data-type="5"] {
+    background: radial-gradient(circle at 30% 30%, #ff0000, #cc0000);
+    box-shadow: 0 0 15px #ff0000, inset 0 0 10px rgba(255,255,255,0.3);
+    border: 1px solid #ff3333;
+}
+
+.controls {
+    margin-top: 15px;
+    animation: fadeInUp 0.8s ease 0.4s both;
+}
+
+.btn {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    border: none;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    margin: 0 5px;
+    text-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+
+.btn:hover {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px var(--primary-color);
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #ff0000 0%, #cc0000 100%);
+}
+
+.btn-danger:hover {
+    background: linear-gradient(135deg, #ff3333 0%, #cc3333 100%);
+}
+
+.game-over {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.9);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.5s ease;
+}
+
+.game-over-content {
+    background: var(--card-bg);
+    padding: 25px;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 280px;
+    animation: scaleIn 0.5s ease;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+    border: 2px solid var(--primary-color);
+}
 
 .settings-modal {
     display: none;
@@ -186,10 +343,11 @@ body {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
+    color: var(--secondary-color);
 }
 
 .setting-group select,
-.setting-group input {
+.setting-group input[type="text"] {
     width: 100%;
     padding: 8px;
     border-radius: 8px;
@@ -198,4 +356,193 @@ body {
     color: white;
 }
 
-/* Добавьте все остальные анимации и медиа-запросы из вашего примера... */
+.setting-group input[type="checkbox"] {
+    transform: scale(1.2);
+    margin-left: 10px;
+}
+
+.profile-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.9);
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.profile-modal-content {
+    background: var(--card-bg);
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    max-width: 250px;
+    border: 2px solid var(--primary-color);
+    box-shadow: 0 0 30px var(--primary-color);
+}
+
+/* АНИМАЦИИ */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes popIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.3) rotate(-180deg);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.1) rotate(10deg);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1.1); box-shadow: 0 0 15px gold, 0 0 30px rgba(255,215,0,0.5); }
+    50% { transform: scale(1.15); box-shadow: 0 0 25px gold, 0 0 40px rgba(255,215,0,0.7); }
+    100% { transform: scale(1.1); box-shadow: 0 0 15px gold, 0 0 30px rgba(255,215,0,0.5); }
+}
+
+@keyframes disappear {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.5;
+        transform: scale(1.2);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0);
+    }
+}
+
+@keyframes fallDown {
+    0% {
+        transform: translateY(-100px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Эффект частиц для совпадений */
+.particle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: particleFloat 1s ease-out forwards;
+    z-index: 100;
+}
+
+@keyframes particleFloat {
+    0% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(var(--particle-x), var(--particle-y)) scale(0);
+    }
+}
+
+.combo-text {
+    position: absolute;
+    font-size: 20px;
+    font-weight: bold;
+    color: gold;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    pointer-events: none;
+    z-index: 50;
+    animation: comboFloat 1.5s ease-out forwards;
+}
+
+@keyframes comboFloat {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-50px) scale(1.5);
+    }
+}
+
+@media (max-width: 420px) {
+    .cell {
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+    }
+
+    .cell img {
+        width: 24px;
+        height: 24px;
+    }
+
+    .leaderboard h2 {
+        font-size: 16px;
+    }
+
+    .score-item {
+        font-size: 12px;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        font-size: 12px;
+        margin: 2px;
+    }
+    
+    .controls {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
