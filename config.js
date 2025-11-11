@@ -64,7 +64,13 @@ const GameConfig = {
             match: 'match.mp3',
             win: 'win.mp3',
             move: 'move.mp3'
-        }
+        },
+        ui: {
+            basePath: 'assets/ui/',
+            button: 'button.png',
+            panel: 'panel.png'
+        },
+        background: 'assets/background.jpg'
     },
     
     // Настройки анимаций
@@ -91,7 +97,8 @@ class ConfigManager {
                 theme: 'default',
                 crystalStyle: 'emoji',
                 sound: true,
-                difficulty: 'normal'
+                difficulty: 'normal',
+                useCustomBackground: false
             };
         }
         this.applySettings();
@@ -111,14 +118,23 @@ class ConfigManager {
         document.documentElement.style.setProperty('--primary-color', theme.primary);
         document.documentElement.style.setProperty('--secondary-color', theme.secondary);
         document.documentElement.style.setProperty('--background-gradient', theme.background);
+        
+        // Применяем кастомный фон
+        if (this.settings.useCustomBackground) {
+            document.body.classList.add('custom-background');
+        } else {
+            document.body.classList.remove('custom-background');
+        }
     }
     
     getCrystalDisplay(type) {
+        if (type === 0) return '';
+        
         const style = this.settings.crystalStyle;
         const crystal = this.config.crystalStyles[style].types[type];
         
-        if (style === 'images' && type > 0) {
-            return `<img src="${this.config.assets.crystals.basePath}${crystal}" alt="Crystal ${type}">`;
+        if (style === 'images') {
+            return `<img src="${this.config.assets.crystals.basePath}${crystal}" alt="Crystal ${type}" onerror="this.parentNode.innerHTML='${this.config.crystalStyles.emoji.types[type]}'">`;
         }
         
         return crystal;
@@ -126,6 +142,27 @@ class ConfigManager {
     
     getDifficultySettings() {
         return this.config.difficulties[this.settings.difficulty];
+    }
+    
+    preloadCrystalImages() {
+        console.log('Предзагрузка изображений кристаллов...');
+        const crystalTypes = this.config.assets.crystals.types;
+        
+        crystalTypes.forEach((crystal, index) => {
+            if (index > 0) { // пропускаем пустой элемент
+                const img = new Image();
+                img.src = this.config.assets.crystals.basePath + crystal;
+                img.onload = () => console.log(`✅ Картинка загружена: ${crystal}`);
+                img.onerror = () => {
+                    console.error(`❌ Ошибка загрузки: ${crystal}`);
+                    // Если картинка не загрузилась, переключаем на эмодзи
+                    if (this.settings.crystalStyle === 'images') {
+                        this.settings.crystalStyle = 'emoji';
+                        this.saveSettings();
+                    }
+                };
+            }
+        });
     }
 }
 
