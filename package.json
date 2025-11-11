@@ -1,0 +1,16 @@
+{
+  "name": "telegram-match3-game",
+  "version": "1.0.0",
+  "description": "Match-3 game for Telegram Mini Apps",
+  "main": "index.html",
+  "scripts": {
+    "start": "http-server -p 3000",
+    "build": "echo 'No build process needed'"
+  },
+  "keywords": ["telegram", "game", "match3", "mini-app"],
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}
