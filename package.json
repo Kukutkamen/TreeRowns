@@ -1,16 +1,24 @@
 {
   "name": "telegram-match3-game",
   "version": "1.0.0",
-  "description": "Match-3 game for Telegram Mini Apps",
+  "description": "Match-3 game for Telegram Mini Apps with customizable themes and crystals",
   "main": "index.html",
   "scripts": {
-    "start": "http-server -p 3000",
-    "build": "echo 'No build process needed'"
+    "start": "python -m http.server 3000",
+    "dev": "python -m http.server 3000"
   },
-  "keywords": ["telegram", "game", "match3", "mini-app"],
+  "keywords": [
+    "telegram",
+    "game",
+    "match3",
+    "mini-app",
+    "html5",
+    "javascript"
+  ],
   "author": "Your Name",
   "license": "MIT",
-  "devDependencies": {
-    "http-server": "^14.1.1"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/telegram-match3-game"
   }
 }
